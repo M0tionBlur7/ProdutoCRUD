@@ -59,11 +59,19 @@ public class ProdutoTableModel extends AbstractTableModel {
         this.fireTableRowsUpdated(linha, linha);
     }
     
-    //Métodos para adicionar LINHAS na tabela.
+    //Métodos para ADICIONAR linhas na tabela.
     public void addLinha(Produto p) {
         this.dados.add(p);
         this.fireTableDataChanged();
     }
+    
+    //Método para REMOVER linhas na tabela.
+    public void removeLinha(int linha) {
+        this.dados.remove(linha);
+        this.fireTableRowsDeleted(linha, linha);    
+    }
+    
+   
     
     
     

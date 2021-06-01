@@ -1,22 +1,27 @@
-
 package Janelas;
-
 
 import BD.Conexao;
 import Model.ProdutoTableModel;
 import Objetos.Produto;
-
+import javax.swing.JOptionPane;
 
 public class CadastroProduto extends javax.swing.JFrame {
+
     ProdutoTableModel modelo = new ProdutoTableModel();
 
-    
     public CadastroProduto() {
         initComponents();
         jTProdutos.setModel(modelo);
     }
 
-    
+    public void limpaCampo() {
+        jTDescricao.setText("");
+        jTQuantidade.setText("");
+        jTValor.setText("");
+
+        jTDescricao.requestFocus();
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -56,6 +61,11 @@ public class CadastroProduto extends javax.swing.JFrame {
         jBAlterar.setText("Alterar");
 
         jBRemover.setText("Remover");
+        jBRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBRemoverActionPerformed(evt);
+            }
+        });
 
         jTProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -137,19 +147,46 @@ public class CadastroProduto extends javax.swing.JFrame {
 
     private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
         // TODO add your handling code here:
-        
+
         Produto p = new Produto();
-        p.setDescrição(jTDescricao.getText());
-        p.setQuantidade(Integer.parseInt(jTQuantidade.getText()));
-        p.setValor(Double.parseDouble(jTValor.getText()));
+        try {
+            if (jTQuantidade.getText().matches("^[0-9]+$") && jTValor.getText().matches("^[0-9]+$")) {
+                p.setDescrição(jTDescricao.getText());
+                p.setQuantidade(Integer.parseInt(jTQuantidade.getText()));
+                p.setValor(Double.parseDouble(jTValor.getText()));
+                modelo.addLinha(p);
+                limpaCampo();
+            } else {
+                if (!(jTQuantidade.getText().matches("^[0-9]+$"))) {
+                    JOptionPane.showMessageDialog(this, "Preencha a quantidade");
+                    jTQuantidade.requestFocus();
+                } else if (!(jTValor.getText().matches("^[0-9]+$"))) {
+                    JOptionPane.showMessageDialog(this, "Preencha o valor");
+                    jTValor.requestFocus();
+                }
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Preencha corretamente os campos! ");
+        }
+
         
-        modelo.addLinha(p);
         
+
+
     }//GEN-LAST:event_jBCadastrarActionPerformed
 
-    
+    private void jBRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRemoverActionPerformed
+        // TODO add your handling code here:
+        if (jTProdutos.getSelectedRow() != -1) {
+            modelo.removeLinha(jTProdutos.getSelectedRow());
+
+        }
+
+    }//GEN-LAST:event_jBRemoverActionPerformed
+
     public static void main(String args[]) {
-        
+
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -172,7 +209,6 @@ public class CadastroProduto extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new CadastroProduto().setVisible(true);
