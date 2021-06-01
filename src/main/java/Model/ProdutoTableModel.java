@@ -71,7 +71,9 @@ public class ProdutoTableModel extends AbstractTableModel {
         this.fireTableRowsDeleted(linha, linha);    
     }
     
-   
+    public Produto pegaDadosLinha(int linha){
+        return dados.get(linha);    
+    }
     
     
     
