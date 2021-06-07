@@ -160,21 +160,30 @@ public class CadastroProduto extends javax.swing.JFrame {
 
         Produto p = new Produto();
         try {
-            if (jTQuantidade.getText().matches("^[0-9]+$") && jTValor.getText().matches("^[0-9]+$")) {
-                p.setDescrição(jTDescricao.getText());
+            
+            p.setDescrição(jTDescricao.getText());
                 p.setQuantidade(Integer.parseInt(jTQuantidade.getText()));
-                p.setValor(Double.parseDouble(jTValor.getText()));
+                p.setValor(Double.parseDouble(jTValor.getText().replace(",", ".")));
                 modelo.addLinha(p);
                 limpaCampo();
-            } else {
-                if (!(jTQuantidade.getText().matches("^[0-9]+$"))) {
-                    JOptionPane.showMessageDialog(this, "Preencha a quantidade");
-                    jTQuantidade.requestFocus();
-                } else if (!(jTValor.getText().matches("^[0-9]+$"))) {
-                    JOptionPane.showMessageDialog(this, "Preencha o valor");
-                    jTValor.requestFocus();
-                }
-            }
+            
+            
+            
+//            if (jTQuantidade.getText().matches("^[0-9]+$") && jTValor.getText().matches("^[0-9]+$")) {
+//                p.setDescrição(jTDescricao.getText());
+//                p.setQuantidade(Integer.parseInt(jTQuantidade.getText()));
+//                p.setValor(Double.parseDouble(jTValor.getText()));
+//                modelo.addLinha(p);
+//                limpaCampo();
+//            } else {
+//                if (!(jTQuantidade.getText().matches("^[0-9]+$"))) {
+//                    JOptionPane.showMessageDialog(this, "Preencha a quantidade");
+//                    jTQuantidade.requestFocus();
+//                } else if (!(jTValor.getText().matches("^[0-9]+$"))) {
+//                    JOptionPane.showMessageDialog(this, "Preencha o valor");
+//                    jTValor.requestFocus();
+//                }
+//            }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Preencha corretamente os campos! ");
@@ -190,6 +199,7 @@ public class CadastroProduto extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (jTProdutos.getSelectedRow() != -1) {
             modelo.removeLinha(jTProdutos.getSelectedRow());
+            limpaCampo();
 
         }
         

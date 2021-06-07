@@ -1,6 +1,9 @@
 
 package Objetos;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 
 public class Produto {
     
@@ -36,6 +39,10 @@ public class Produto {
 
     
     public void setValor(double valor) {
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        df.setRoundingMode(RoundingMode.DOWN);
+        
         this.valor = valor;
     }
 
